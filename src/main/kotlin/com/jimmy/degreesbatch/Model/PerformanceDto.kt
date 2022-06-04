@@ -6,10 +6,10 @@ import lombok.*
 @Setter
 @ToString
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @AllArgsConstructor
 
-public class PerformanceDto {
+class PerformanceDto {
     private var mt20id: String = "";
     private var prfnm: String = "";
 }
