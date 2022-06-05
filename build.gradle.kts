@@ -31,6 +31,7 @@ dependencies {
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	compileOnly("org.mariadb.jdbc", "mariadb-java-client", "3.0.5")
+	compileOnly("com.fasterxml.jackson.dataformat", "jackson-dataformat-xml", "2.11.3")
 }
 
 tasks.withType<KotlinCompile> {
