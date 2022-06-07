@@ -8,9 +8,9 @@ import lombok.ToString
 @Setter
 @ToString
 class Body<T> {
-    private val dataType: String? = null
-    private val items: Items<T>? = null
-    private val pageNo: Int? = null
-    private val numOfRows: Int? = null
-    private val totalCount: Int? = null
+    val dataType: String? = null
+    val items: Items<T>? = null
+    val pageNo: Int? = null
+    val numOfRows: Int? = null
+    val totalCount: Int? = null
 }

@@ -8,6 +8,6 @@ import lombok.ToString
 @Setter
 @ToString
 class Response<T> {
-    private val header: Header? = null
-    private val body: Body<T>? = null
+    val header: Header? = null
+    val body: Body<T>? = null
 }

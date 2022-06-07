@@ -8,5 +8,5 @@ import lombok.ToString
 @Setter
 @ToString
 class Items<T> {
-    private val item: List<T>? = null
+    val item: List<T>? = null
 }

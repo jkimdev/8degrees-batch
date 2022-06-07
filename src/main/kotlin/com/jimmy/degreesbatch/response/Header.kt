@@ -8,6 +8,6 @@ import lombok.ToString
 @Setter
 @ToString
 class Header {
-    private val resultCode: String? = null
-    private val resultMsg: String? = null
+    val resultCode: String? = null
+    val resultMsg: String? = null
 }
