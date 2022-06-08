@@ -1,13 +1,8 @@
 package com.jimmy.degreesbatch.job
 
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.MapperFeature
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
-import com.fasterxml.jackson.module.kotlin.readValue
-import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import com.jimmy.degreesbatch.Model.DBS
 import com.jimmy.degreesbatch.Model.PerformanceDto
 import com.jimmy.degreesbatch.response.ResultResponse
 import com.jimmy.degreesbatch.service.PerformanceService
@@ -27,8 +22,10 @@ class PerformanceJob(performanceService: PerformanceService) {
         this.performanceService = performanceService
     }
 
-    @Value("\${kopis.apikey}") val KOPIS_APIKEY: String = "ebcfbb27f8a848538981849b321a58aa";
-    @Value("\${kopis.performance.list}") val KOPIS_PERFORMANCE_LIST: String? = "http://www.kopis.or.kr/openApi/restful/pblprfr?"
+    @Value("\${kopis.apikey}")
+    lateinit var KOPIS_APIKEY: String;
+    @Value("\${kopis.performance.list}")
+    lateinit var KOPIS_PERFORMANCE_LIST: String
 
 
     @Scheduled(cron = "*/10 * * * * *")
@@ -39,7 +36,6 @@ class PerformanceJob(performanceService: PerformanceService) {
         var url = URL(apiUrl)
         var resultResponse: ResultResponse<PerformanceDto> = om.readValue(url, ResultResponse::class.java) as ResultResponse<PerformanceDto>
 
-        println(url)
-        println(resultResponse.response?.header)
+        println(resultResponse.db)
     }
 }
