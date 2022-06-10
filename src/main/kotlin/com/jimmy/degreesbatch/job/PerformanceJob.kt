@@ -2,7 +2,11 @@ package com.jimmy.degreesbatch.job
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.DeserializationFeature
+import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
+import com.fasterxml.jackson.module.kotlin.convertValue
+import com.fasterxml.jackson.module.kotlin.kotlinModule
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.jimmy.degreesbatch.Model.PerformanceDto
 import com.jimmy.degreesbatch.response.ResultResponse
 import com.jimmy.degreesbatch.service.PerformanceService
@@ -32,10 +36,16 @@ class PerformanceJob(performanceService: PerformanceService) {
     private fun getPerformance() {
 //       var result:List<PerformanceDto> = performanceService.selectPerformance()
         var apiUrl = "${KOPIS_PERFORMANCE_LIST}service=${KOPIS_APIKEY}&stdate=20160601&eddate=20160630&cpage=1&rows=5"
-        var om = XmlMapper().configure (DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        var url = URL(apiUrl)
-        var resultResponse: ResultResponse<PerformanceDto> = om.readValue(url, ResultResponse::class.java) as ResultResponse<PerformanceDto>
 
+        var module = JacksonXmlModule()
+        module.setDefaultUseWrapper(false)
+
+        var om = XmlMapper(module).configure (DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        var url = URL(apiUrl)
+        var resultResponse = om.readValue(url, ResultResponse::class.java)
+
+//       var performanceList: List<PerformanceDto> = om.readValue(resultResponse, List::class.java)
         println(resultResponse.db)
+
     }
 }
