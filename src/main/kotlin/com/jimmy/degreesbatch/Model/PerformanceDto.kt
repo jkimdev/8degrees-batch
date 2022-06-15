@@ -10,6 +10,6 @@ import lombok.*
 @AllArgsConstructor
 
 class PerformanceDto {
-    private var mt20id: String = "";
-    private var prfnm: String = "";
+    lateinit var mt20id: String
+    lateinit var prfnm: String
 }

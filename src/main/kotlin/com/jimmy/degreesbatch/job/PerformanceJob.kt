@@ -1,24 +1,22 @@
 package com.jimmy.degreesbatch.job
 
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
-import com.fasterxml.jackson.module.kotlin.convertValue
-import com.fasterxml.jackson.module.kotlin.kotlinModule
-import com.fasterxml.jackson.module.kotlin.readValue
-import com.jimmy.degreesbatch.Model.PerformanceDto
 import com.jimmy.degreesbatch.response.ResultResponse
 import com.jimmy.degreesbatch.service.PerformanceService
 import lombok.extern.slf4j.Slf4j
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
+import java.lang.Math.log
 import java.net.URL
+import kotlin.math.ln
 
 @Component
 @Slf4j
 class PerformanceJob(performanceService: PerformanceService) {
+
 
    private var performanceService: PerformanceService = PerformanceService();
 
@@ -35,17 +33,22 @@ class PerformanceJob(performanceService: PerformanceService) {
     @Scheduled(cron = "*/10 * * * * *")
     private fun getPerformance() {
 //       var result:List<PerformanceDto> = performanceService.selectPerformance()
-        var apiUrl = "${KOPIS_PERFORMANCE_LIST}service=${KOPIS_APIKEY}&stdate=20160601&eddate=20160630&cpage=1&rows=5"
+        var apiUrl = "${KOPIS_PERFORMANCE_LIST}service=${KOPIS_APIKEY}&stdate=20160601&eddate=20160630&cpage=1&rows=0"
 
         var module = JacksonXmlModule()
         module.setDefaultUseWrapper(false)
 
-        var om = XmlMapper(module).configure (DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        var om = XmlMapper(module).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
         var url = URL(apiUrl)
         var resultResponse = om.readValue(url, ResultResponse::class.java)
 
-//       var performanceList: List<PerformanceDto> = om.readValue(resultResponse, List::class.java)
-        println(resultResponse.db)
-
+        if (resultResponse.db != null) {
+            for (i in resultResponse.db!!) {
+                println(i)
+            }
+        }
+        else {
+            // todo :: 결과값 null인 경우 log 남기기
+        }
     }
 }
