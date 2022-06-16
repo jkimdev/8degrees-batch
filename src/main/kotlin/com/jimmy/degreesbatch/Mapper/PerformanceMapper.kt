@@ -8,4 +8,6 @@ interface PerformanceMapper{
 
     fun findById(): List<PerformanceDto>
 
+    fun insertPerformance(vo: PerformanceDto);
+
 }

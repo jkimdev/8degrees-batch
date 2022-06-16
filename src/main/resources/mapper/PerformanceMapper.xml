@@ -5,4 +5,8 @@
     <select id="findById"  resultType="com.jimmy.degreesbatch.Model.PerformanceDto">
         SELECT * from performance
     </select>
+
+    <insert id="insertPerformance" parameterType="com.jimmy.degreesbatch.Model.PerformanceDto">
+        INSERT INTO performance values ('123', '1123')
+    </insert>
 </mapper>

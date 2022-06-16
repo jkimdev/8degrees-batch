@@ -4,7 +4,6 @@ import com.jimmy.degreesbatch.Mapper.PerformanceMapper
 import com.jimmy.degreesbatch.Model.PerformanceDto
 import lombok.RequiredArgsConstructor
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 
 @Service
@@ -16,5 +15,9 @@ class PerformanceService {
 
     fun selectPerformance(): List<PerformanceDto> {
         return mapper.findById();
+    }
+
+    fun insertPerformance(vo: PerformanceDto) {
+        mapper.insertPerformance(vo)
     }
 }
