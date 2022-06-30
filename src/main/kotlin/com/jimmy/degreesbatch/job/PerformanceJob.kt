@@ -40,11 +40,8 @@ class PerformanceJob(performanceService: PerformanceService) {
         var url = URL(apiUrl)
         var resultResponse = om.readValue(url, ResultResponse::class.java)
 
-        print(resultResponse.db?.get(1)?.mt20id)
-
-        if (resultResponse != null) {
-            for (i in resultResponse.db!!.indices)
-            resultResponse.db?.get(i)?.let { performanceService.insertPerformance(it) }
-        }
+//        if (resultResponse != null) {
+            resultResponse.db?.let { performanceService.insertPerformance(it) }
+//        }
     }
 }

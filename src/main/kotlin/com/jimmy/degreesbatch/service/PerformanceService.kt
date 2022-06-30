@@ -13,11 +13,17 @@ class PerformanceService {
  @Autowired
     lateinit var mapper: PerformanceMapper;
 
+    // SELECT
     fun selectPerformance(): List<PerformanceDto> {
         return mapper.findById();
     }
 
-    fun insertPerformance(vo: PerformanceDto) {
-        mapper.insertPerformance(vo)
+    // INSERT
+    fun insertPerformance(vo: List<PerformanceDto>) {
+
+        mapper.deletePerformance()
+        for (i in vo.indices) {
+            mapper.insertPerformance(vo[i])
+        }
     }
 }

@@ -10,4 +10,6 @@ interface PerformanceMapper{
 
     fun insertPerformance(vo: PerformanceDto);
 
+    fun deletePerformance();
+
 }

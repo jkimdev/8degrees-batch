@@ -9,4 +9,9 @@
     <insert id="insertPerformance" parameterType="com.jimmy.degreesbatch.Model.PerformanceDto">
         INSERT INTO performance(MT20ID, PRFNM) values ( #{mt20id}, #{prfnm} )
     </insert>
+
+    <delete id="deletePerformance">
+        DELETE FROM performance
+    </delete>
+
 </mapper>
