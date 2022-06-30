@@ -7,6 +7,6 @@
     </select>
 
     <insert id="insertPerformance" parameterType="com.jimmy.degreesbatch.Model.PerformanceDto">
-        INSERT INTO performance values ('123', '1123')
+        INSERT INTO performance(MT20ID, PRFNM) values ( #{mt20id}, #{prfnm} )
     </insert>
 </mapper>

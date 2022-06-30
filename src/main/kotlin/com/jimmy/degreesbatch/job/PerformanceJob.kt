@@ -9,9 +9,7 @@ import lombok.extern.slf4j.Slf4j
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Component
-import java.lang.Math.log
 import java.net.URL
-import kotlin.math.ln
 
 @Component
 @Slf4j
@@ -42,15 +40,11 @@ class PerformanceJob(performanceService: PerformanceService) {
         var url = URL(apiUrl)
         var resultResponse = om.readValue(url, ResultResponse::class.java)
 
-        print(url)
+        print(resultResponse.db?.get(1)?.mt20id)
 
-        if (resultResponse.db != null) {
-            for (i in resultResponse.db!!) {
-                println(i)
-            }
-        }
-        else {
-            // todo :: 결과값 null인 경우 log 남기기
+        if (resultResponse != null) {
+            for (i in resultResponse.db!!.indices)
+            resultResponse.db?.get(i)?.let { performanceService.insertPerformance(it) }
         }
     }
 }
