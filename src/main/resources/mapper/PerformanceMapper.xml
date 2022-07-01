@@ -7,7 +7,7 @@
     </select>
 
     <insert id="insertPerformance" parameterType="com.jimmy.degreesbatch.Model.PerformanceDto">
-        INSERT INTO performance(MT20ID, PRFNM) values ( #{mt20id}, #{prfnm} )
+        INSERT INTO performance(MT20ID, PRFNM, PRFPDFROM, PRFPDTO , FCLTYNM, POSTER, GENRENM, PRFSTATE, OPENRUN ) values ( #{mt20id}, #{prfnm} , #{prfpdfrom} , #{prfpdto}, #{fcltynm}, #{poster}, #{genrenm}, #{prfstate}, #{openrun} )
     </insert>
 
     <delete id="deletePerformance">
