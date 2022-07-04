@@ -1,6 +1,7 @@
 package com.jimmy.degreesbatch.service
 
 import com.jimmy.degreesbatch.Mapper.PerformanceMapper
+import com.jimmy.degreesbatch.Model.PerformanceDetailDto
 import com.jimmy.degreesbatch.Model.PerformanceDto
 import lombok.RequiredArgsConstructor
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,7 +20,7 @@ class PerformanceService {
     }
 
     // INSERT
-    fun insertPerformance(vo: List<PerformanceDto>) {
+    fun insertPerformance(vo: List<PerformanceDetailDto>) {
 
         mapper.deletePerformance()
         for (i in vo.indices) {

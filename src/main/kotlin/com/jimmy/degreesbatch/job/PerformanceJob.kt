@@ -3,6 +3,7 @@ package com.jimmy.degreesbatch.job
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
+import com.jimmy.degreesbatch.response.ResultResponseDetail
 import com.jimmy.degreesbatch.response.ResultResponse
 import com.jimmy.degreesbatch.service.PerformanceService
 import lombok.extern.slf4j.Slf4j
@@ -26,6 +27,8 @@ class PerformanceJob(performanceService: PerformanceService) {
     lateinit var KOPIS_APIKEY: String;
     @Value("\${kopis.performance.list}")
     lateinit var KOPIS_PERFORMANCE_LIST: String
+    @Value("\${kopis.performance.detail}")
+    lateinit var KOPIS_PERFORMANCE_DETAIL: String
 
 
     @Scheduled(cron = "*/10 * * * * *")
@@ -40,8 +43,22 @@ class PerformanceJob(performanceService: PerformanceService) {
         var url = URL(apiUrl)
         var resultResponse = om.readValue(url, ResultResponse::class.java)
 
+        if (resultResponse != null) {
+            for (i in resultResponse.db?.indices!!) {
+              var apiUrl2 = KOPIS_PERFORMANCE_DETAIL + resultResponse.db!![i].mt20id + "/?service=${KOPIS_APIKEY}"
+              var xm = XmlMapper(module).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                var url2 = URL(apiUrl2)
+                var detailResultResponse = xm.readValue(url2, ResultResponseDetail::class.java)
+
+                detailResultResponse.db?.let { performanceService.insertPerformance(it) }
+            }
+
+
+        }
+
+
 //        if (resultResponse != null) {
-            resultResponse.db?.let { performanceService.insertPerformance(it) }
+//            resultResponse.db?.let { performanceService.insertPerformance(it) }
 //        }
     }
 }
