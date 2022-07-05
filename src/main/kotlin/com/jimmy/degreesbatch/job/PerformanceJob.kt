@@ -34,7 +34,7 @@ class PerformanceJob(performanceService: PerformanceService) {
     @Scheduled(cron = "*/10 * * * * *")
     private fun getPerformance() {
 //       var result:List<PerformanceDto> = performanceService.selectPerformance()
-        var apiUrl = "${KOPIS_PERFORMANCE_LIST}service=${KOPIS_APIKEY}&stdate=20220601&eddate=20220630&cpage=1&rows=5"
+        var apiUrl = "${KOPIS_PERFORMANCE_LIST}service=${KOPIS_APIKEY}&stdate=20220705&eddate=20220715&cpage=1&rows=5"
 
         var module = JacksonXmlModule()
         module.setDefaultUseWrapper(false)
@@ -42,6 +42,8 @@ class PerformanceJob(performanceService: PerformanceService) {
         var om = XmlMapper(module).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
         var url = URL(apiUrl)
         var resultResponse = om.readValue(url, ResultResponse::class.java)
+
+        performanceService.deletePerformance()
 
         if (resultResponse != null) {
             for (i in resultResponse.db?.indices!!) {

@@ -22,9 +22,13 @@ class PerformanceService {
     // INSERT
     fun insertPerformance(vo: List<PerformanceDetailDto>) {
 
-        mapper.deletePerformance()
         for (i in vo.indices) {
             mapper.insertPerformance(vo[i])
         }
+    }
+
+    // DELETE
+    fun deletePerformance() {
+        mapper.deletePerformance()
     }
 }
