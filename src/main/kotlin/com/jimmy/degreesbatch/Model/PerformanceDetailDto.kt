@@ -20,6 +20,4 @@ class PerformanceDetailDto {
     lateinit var openrun: String
 //    lateinit var styurls: String
     lateinit var mt10id: String
-
-
 }
