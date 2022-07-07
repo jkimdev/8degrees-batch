@@ -28,7 +28,7 @@
                                 DTGUIDANCE)
         VALUES (#{mt20id},
                 #{mt10id},
-                #{prfnm},
+                SUBSTRING_INDEX(#{prfnm}, IF(LOCATE('[', #{prfnm}), '[', '('), 1),
                 #{prfpdfrom},
                 #{prfpdto},
                 #{fcltynm},

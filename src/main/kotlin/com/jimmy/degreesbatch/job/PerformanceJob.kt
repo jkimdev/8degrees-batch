@@ -34,7 +34,7 @@ class PerformanceJob(performanceService: PerformanceService) {
     @Scheduled(cron = "*/10 * * * * *")
     private fun getPerformance() {
 //       var result:List<PerformanceDto> = performanceService.selectPerformance()
-        var apiUrl = "${KOPIS_PERFORMANCE_LIST}service=${KOPIS_APIKEY}&stdate=20220705&eddate=20220715&cpage=1&rows=5"
+        var apiUrl = "${KOPIS_PERFORMANCE_LIST}service=${KOPIS_APIKEY}&stdate=20220705&eddate=202201231&cpage=1&rows=1000"
 
         var module = JacksonXmlModule()
         module.setDefaultUseWrapper(false)
