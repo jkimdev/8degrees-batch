@@ -17,7 +17,7 @@ import java.net.URL
 class PerformanceJob(performanceService: PerformanceService) {
 
 
-   private var performanceService: PerformanceService = PerformanceService();
+    private var performanceService: PerformanceService = PerformanceService();
 
     init {
         this.performanceService = performanceService
@@ -25,42 +25,43 @@ class PerformanceJob(performanceService: PerformanceService) {
 
     @Value("\${kopis.apikey}")
     lateinit var KOPIS_APIKEY: String;
+
     @Value("\${kopis.performance.list}")
     lateinit var KOPIS_PERFORMANCE_LIST: String
+
     @Value("\${kopis.performance.detail}")
     lateinit var KOPIS_PERFORMANCE_DETAIL: String
 
 
-    @Scheduled(cron = "*/10 * * * * *")
-    private fun getPerformance() {
-//       var result:List<PerformanceDto> = performanceService.selectPerformance()
-        var apiUrl = "${KOPIS_PERFORMANCE_LIST}service=${KOPIS_APIKEY}&stdate=20220705&eddate=202201231&cpage=1&rows=1000"
-
-        var module = JacksonXmlModule()
-        module.setDefaultUseWrapper(false)
-
-        var om = XmlMapper(module).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        var url = URL(apiUrl)
-        var resultResponse = om.readValue(url, ResultResponse::class.java)
-
-        performanceService.deletePerformance()
-
-        if (resultResponse != null) {
-            for (i in resultResponse.db?.indices!!) {
-              var apiUrl2 = KOPIS_PERFORMANCE_DETAIL + resultResponse.db!![i].mt20id + "/?service=${KOPIS_APIKEY}"
-              var xm = XmlMapper(module).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                var url2 = URL(apiUrl2)
-                var detailResultResponse = xm.readValue(url2, ResultResponseDetail::class.java)
-
-                detailResultResponse.db?.let { performanceService.insertPerformance(it) }
-            }
-
-
-        }
-
-
+//    @Scheduled(cron = "*/10 * * * * *")
+//    private fun getPerformance() {
+////       var result:List<PerformanceDto> = performanceService.selectPerformance()
+//        var apiUrl =
+//            "${KOPIS_PERFORMANCE_LIST}service=${KOPIS_APIKEY}&stdate=20220705&eddate=202201231&cpage=1&rows=1000"
+//
+//        var module = JacksonXmlModule()
+//        module.setDefaultUseWrapper(false)
+//
+//        var om = XmlMapper(module).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+//        var url = URL(apiUrl)
+//        var resultResponse = om.readValue(url, ResultResponse::class.java)
+//
+//        performanceService.deletePerformance()
+//
 //        if (resultResponse != null) {
-//            resultResponse.db?.let { performanceService.insertPerformance(it) }
+//            for (i in resultResponse.db?.indices!!) {
+//                var apiUrl2 = KOPIS_PERFORMANCE_DETAIL + resultResponse.db!![i].mt20id + "/?service=${KOPIS_APIKEY}"
+//                var xm = XmlMapper(module).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+//                var url2 = URL(apiUrl2)
+//                var detailResultResponse = xm.readValue(url2, ResultResponseDetail::class.java)
+//
+//                detailResultResponse.db?.let { performanceService.insertPerformance(it) }
+//            }
 //        }
+//    }
+
+    @Scheduled(cron = "*/10 * * * * *")
+    private fun getFacility() {
+
     }
 }
