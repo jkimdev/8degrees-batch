@@ -1,12 +1,14 @@
 package com.jimmy.degreesbatch.Model
 
+import kotlin.properties.Delegates
+
 class FacilityDto {
-    lateinit var fcltynm: String
     lateinit var mt10id: String
-    lateinit var mt13cnt: String
+    lateinit var fcltynm: String
+    var mt13cnt by Delegates.notNull<Int>()
     lateinit var fcltychartr: String
-    lateinit var opende: String
-    lateinit var seatscale: String
+    var opende by Delegates.notNull<Int>()
+    var seatscale by Delegates.notNull<Int>()
     lateinit var telno: String
     lateinit var relateurl: String
     lateinit var adres: String

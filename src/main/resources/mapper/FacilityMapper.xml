@@ -3,4 +3,36 @@
 
 <mapper namespace="com.jimmy.degreesbatch.Mapper.FacilityMapper">
 
+    <insert id="insertFacility" parameterType="com.jimmy.degreesbatch.Model.FacilityDto">
+        INSERT INTO facility (MT10ID,
+                              FCLTYNM,
+                              MT13CNT,
+                              FCLTYCHARTR,
+                              OPENDE,
+                              SEATSCALE,
+                              TELNO,
+                              RELATEURL,
+                              ADRES,
+                              LA,
+                              LO)
+        VALUES (#{mt10id},
+                SUBSTRING_INDEX(#{fcltynm}, IF(LOCATE('[', #{fcltynm}), '[', '('), 1),
+                #{mt13cnt},
+                SUBSTRING_INDEX(#{fcltychartr}, IF(LOCATE('[', #{fcltychartr}), '[', '('), 1),
+                #{opende},
+                #{seatscale},
+                #{telno},
+                #{relateurl},
+                SUBSTRING_INDEX(#{adres}, IF(LOCATE('[', #{adres}), '[', '('), 1),
+                #{la},
+                #{lo})
+    </insert>
+
+    <delete id="deleteFacility">
+
+        DELETE
+        FROM facility
+
+    </delete>
+
 </mapper>

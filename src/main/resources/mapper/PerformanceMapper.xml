@@ -7,6 +7,11 @@
         from performance
     </select>
 
+    <select id="selectDistinctFC" resultType="String">
+        SELECT DISTINCT (MT10ID)
+        from performance
+    </select>
+
     <insert id="insertPerformance" parameterType="com.jimmy.degreesbatch.Model.PerformanceDetailDto">
         INSERT INTO performance(MT20ID,
                                 MT10ID,

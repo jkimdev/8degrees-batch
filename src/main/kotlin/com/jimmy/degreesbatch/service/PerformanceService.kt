@@ -12,11 +12,15 @@ import org.springframework.stereotype.Service
 class PerformanceService {
 
  @Autowired
-    lateinit var mapper: PerformanceMapper;
+    lateinit var mapper: PerformanceMapper
 
     // SELECT
     fun selectPerformance(): List<PerformanceDto> {
         return mapper.findById();
+    }
+
+    fun selectDistinctFC(): List<String> {
+        return mapper.selectDistinctFC()
     }
 
     // INSERT
