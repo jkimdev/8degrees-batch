@@ -4,17 +4,17 @@
 <mapper namespace="com.jimmy.degreesbatch.Mapper.FacilityMapper">
 
     <insert id="insertFacility" parameterType="com.jimmy.degreesbatch.Model.FacilityDto">
-        INSERT INTO facility (MT10ID,
-                              FCLTYNM,
-                              MT13CNT,
-                              FCLTYCHARTR,
-                              OPENDE,
-                              SEATSCALE,
-                              TELNO,
-                              RELATEURL,
-                              ADRES,
-                              LA,
-                              LO)
+        INSERT INTO facility_tb (FACILITY_ID,
+                              PLACE,
+                              HALL,
+                              TYPE,
+                              SINCE,
+                              SEAT,
+                              TEL_NO,
+                              URL,
+                              ADDRESS,
+                              LATITUDE,
+                              LONGTITUDE)
         VALUES (#{mt10id},
                 SUBSTRING_INDEX(#{fcltynm}, IF(LOCATE('[', #{fcltynm}), '[', '('), 1),
                 #{mt13cnt},
@@ -31,7 +31,7 @@
     <delete id="deleteFacility">
 
         DELETE
-        FROM facility
+        FROM facility_tb
 
     </delete>
 

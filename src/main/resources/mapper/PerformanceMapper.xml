@@ -4,33 +4,33 @@
 <mapper namespace="com.jimmy.degreesbatch.Mapper.PerformanceMapper">
     <select id="findById" resultType="com.jimmy.degreesbatch.Model.PerformanceDto">
         SELECT *
-        from performance
+        from performance_tb
     </select>
 
     <select id="selectDistinctFC" resultType="String">
-        SELECT DISTINCT (MT10ID)
-        from performance
+        SELECT DISTINCT (FACILITY_ID)
+        from performance_tb
     </select>
 
     <insert id="insertPerformance" parameterType="com.jimmy.degreesbatch.Model.PerformanceDetailDto">
-        INSERT INTO performance(MT20ID,
-                                MT10ID,
-                                PRFNM,
-                                PRFPDFROM,
-                                PRFPDTO,
-                                FCLTYNM,
-                                PRFCAST,
-                                PRFCREW,
-                                PRFRUNTIME,
-                                PRFAGE,
-                                ENTRPSNM,
-                                PCSEGUIDANCE,
+        INSERT INTO performance_tb(PERFORMANCE_ID,
+                                FACILITY_ID,
+                                TITLE,
+                                START_DATE,
+                                END_DATE,
+                                PLACE,
+                                ACTOR,
+                                CREW,
+                                RUNTIME,
+                                RATING,
+                                PRODUCER,
+                                PRICE,
                                 POSTER,
-                                STY,
-                                GENRENM,
-                                PRFSTATE,
+                                STORY,
+                                GENRE,
+                                STATE,
                                 OPENRUN,
-                                DTGUIDANCE)
+                                PERFORMANCE_SCHEDULE)
         VALUES (#{mt20id},
                 #{mt10id},
                 SUBSTRING_INDEX(#{prfnm}, IF(LOCATE('[', #{prfnm}), '[', '('), 1),
@@ -53,7 +53,7 @@
 
     <delete id="deletePerformance">
         DELETE
-        FROM performance
+        FROM performance_tb
     </delete>
 
 </mapper>
