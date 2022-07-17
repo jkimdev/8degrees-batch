@@ -6,6 +6,5 @@ import org.apache.ibatis.annotations.Mapper
 @Mapper
 interface FacilityMapper {
     fun insertFacility(vo: FacilityDto)
-
     fun deleteFacility()
 }

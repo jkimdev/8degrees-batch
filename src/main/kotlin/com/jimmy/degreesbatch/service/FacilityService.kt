@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service
 @RequiredArgsConstructor
 class FacilityService {
 
-@Autowired
+    @Autowired
     lateinit var mapper: FacilityMapper
 
     // INSERT

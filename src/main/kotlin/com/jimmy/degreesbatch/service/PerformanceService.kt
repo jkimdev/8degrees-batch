@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service
 @RequiredArgsConstructor
 class PerformanceService {
 
- @Autowired
+    @Autowired
     lateinit var mapper: PerformanceMapper
 
     // SELECT

@@ -2,6 +2,6 @@ package com.jimmy.degreesbatch.response
 
 import com.jimmy.degreesbatch.Model.PerformanceDetailDto
 
-class ResultResponseDetail<T> {
+class DetailPerformanceResultResponse<T> {
     val db: List<PerformanceDetailDto>? = null
 }

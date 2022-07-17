@@ -6,14 +6,11 @@ import com.jimmy.degreesbatch.Model.PerformanceDto
 import org.apache.ibatis.annotations.Mapper
 
 @Mapper
-interface PerformanceMapper{
+interface PerformanceMapper {
 
     fun findById(): List<PerformanceDto>
-
     fun selectDistinctFC(): List<String>
-
     fun insertPerformance(vo: PerformanceDetailDto)
-
     fun deletePerformance()
 
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jimmy.degreesbatch.Mapper.BoxOfficeMapper">
+
+    <insert id="insertBoxOffice" parameterType="com.jimmy.degreesbatch.Model.BoxOfficeDto">
+        INSERT INTO boxoffice_tb (PERFORMANCE_ID,
+                                  RANKING,
+                                  TITLE,
+                                  GENRE,
+                                  POSTER)
+        VALUES (#{mt20id},
+                #{rnum},
+                #{prfnm},
+                #{cate},
+                #{poster})
+    </insert>
+
+    <delete id="deleteBoxOffice">
+        DELETE
+        FROM boxoffice_tb
+    </delete>
+
+</mapper>
