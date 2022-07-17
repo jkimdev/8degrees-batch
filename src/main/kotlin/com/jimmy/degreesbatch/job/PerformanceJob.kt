@@ -45,46 +45,45 @@ class PerformanceJob(performanceService: PerformanceService, facilityService: Fa
 
         performanceService.deletePerformance()
 
-        var apiUrl =
+        var performanceAPIUrl =
             "${KOPIS_PERFORMANCE}service=${KOPIS_APIKEY}&stdate=20220705&eddate=202201231&cpage=1&rows=1000"
 
-        var module = JacksonXmlModule()
-        module.setDefaultUseWrapper(false)
+        var xmlModule = JacksonXmlModule()
+        xmlModule.setDefaultUseWrapper(false)
 
-        var xm = XmlMapper(module).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        var url = URL(apiUrl)
-        var resultResponse = xm.readValue(url, ResultResponse::class.java)
+        var xmlConfigure = XmlMapper(xmlModule).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        var performanceURL = URL(performanceAPIUrl)
+        var performanceResultResponse = xmlConfigure.readValue(performanceURL, ResultResponse::class.java)
 
-        if (resultResponse != null) {
-            for (i in resultResponse.db?.indices!!) {
-                var apiUrl2 = KOPIS_PERFORMANCE_DETAIL + resultResponse.db!![i].mt20id + "/?service=${KOPIS_APIKEY}"
-                var xm = XmlMapper(module).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-                var url2 = URL(apiUrl2)
-                var detailResultResponse = xm.readValue(url2, ResultResponseDetail::class.java)
+        if (performanceResultResponse != null) {
+            for (i in performanceResultResponse.db?.indices!!) {
+                var performanceDetailAPIUrl = KOPIS_PERFORMANCE_DETAIL + performanceResultResponse.db!![i].mt20id + "/?service=${KOPIS_APIKEY}"
+                var performanceDetailURL = URL(performanceDetailAPIUrl)
+                var performanceDetailResultResponse = xmlConfigure.readValue(performanceDetailURL, ResultResponseDetail::class.java)
 
-                detailResultResponse.db?.let { performanceService.insertPerformance(it) }
+                performanceDetailResultResponse.db?.let { performanceService.insertPerformance(it) }
             }
         }
     }
 
-    @Scheduled(cron = "*/15 * * * * *")
+    @Scheduled(cron = "*/20 * * * * *")
     private fun getFacility() {
 
-        facilityService.deleteFacility()
+//        facilityService.deleteFacility()
 
-        var fcList: List<String> = performanceService.selectDistinctFC()
+        var facilities: List<String> = performanceService.selectDistinctFC()
 
-        var module = JacksonXmlModule()
-        module.setDefaultUseWrapper(false)
+        var xmlModule = JacksonXmlModule()
+        xmlModule.setDefaultUseWrapper(false)
 
-        var xm = XmlMapper(module).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        var xmlConfigure = XmlMapper(xmlModule).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
-        for (i in fcList.indices) {
-            var apiUrl = "${KOPIS_FACILITY}${fcList[i]}?service=${KOPIS_APIKEY}"
-            var url = URL(apiUrl)
-            var resultResponse = xm.readValue(url, FacilityResponse::class.java)
-            if (resultResponse != null) {
-                resultResponse.db?.let { facilityService.insertFacility(it) }
+        for (i in facilities.indices) {
+            var facilityAPIUrl = "${KOPIS_FACILITY}${facilities[i]}?service=${KOPIS_APIKEY}"
+            var url = URL(facilityAPIUrl)
+            var facilityResultResponse = xmlConfigure.readValue(url, FacilityResponse::class.java)
+            if (facilityResultResponse != null) {
+                facilityResultResponse.db?.let { facilityService.insertFacility(it) }
             }
         }
     }
