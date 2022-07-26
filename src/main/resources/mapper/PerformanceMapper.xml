@@ -4,16 +4,16 @@
 <mapper namespace="com.jimmy.degreesbatch.Mapper.PerformanceMapper">
     <select id="findById" resultType="com.jimmy.degreesbatch.Model.PerformanceDto">
         SELECT *
-        from performance_tb
+        from performances
     </select>
 
     <select id="selectDistinctFC" resultType="String">
         SELECT DISTINCT (FACILITY_ID)
-        from performance_tb
+        from performances
     </select>
 
     <insert id="insertPerformance" parameterType="com.jimmy.degreesbatch.Model.PerformanceDetailDto">
-        INSERT INTO performance_tb(PERFORMANCE_ID,
+        INSERT INTO performances(PERFORMANCE_ID,
                                 FACILITY_ID,
                                 TITLE,
                                 START_DATE,
@@ -53,7 +53,7 @@
 
     <delete id="deletePerformance">
         DELETE
-        FROM performance_tb
+        FROM performances
     </delete>
 
 </mapper>

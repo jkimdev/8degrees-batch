@@ -4,7 +4,7 @@
 <mapper namespace="com.jimmy.degreesbatch.Mapper.BoxOfficeMapper">
 
     <insert id="insertBoxOffice" parameterType="com.jimmy.degreesbatch.Model.BoxOfficeDto">
-        INSERT INTO boxoffice_tb (PERFORMANCE_ID,
+        INSERT INTO boxoffices (PERFORMANCE_ID,
                                   RANKING,
                                   TITLE,
                                   GENRE,
@@ -18,7 +18,7 @@
 
     <delete id="deleteBoxOffice">
         DELETE
-        FROM boxoffice_tb
+        FROM boxoffices
     </delete>
 
 </mapper>
