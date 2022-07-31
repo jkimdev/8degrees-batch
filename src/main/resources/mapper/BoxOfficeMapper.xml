@@ -4,7 +4,7 @@
 <mapper namespace="com.jimmy.degreesbatch.Mapper.BoxOfficeMapper">
 
     <insert id="insertBoxOffice" parameterType="com.jimmy.degreesbatch.Model.BoxOfficeDto">
-        INSERT INTO boxoffices (PERFORMANCE_ID,
+        INSERT INTO boxoffices (PERFORMANCEID,
                                   RANKING,
                                   TITLE,
                                   GENRE,

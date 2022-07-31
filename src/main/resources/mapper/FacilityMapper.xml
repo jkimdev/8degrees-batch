@@ -4,13 +4,13 @@
 <mapper namespace="com.jimmy.degreesbatch.Mapper.FacilityMapper">
 
     <insert id="insertFacility" parameterType="com.jimmy.degreesbatch.Model.FacilityDto">
-        INSERT INTO facilities (FACILITY_ID,
+        INSERT INTO facilities (FACILITYID,
                               PLACE,
                               HALL,
                               TYPE,
                               SINCE,
                               SEAT,
-                              TEL_NO,
+                              TELNO,
                               URL,
                               ADDRESS,
                               LATITUDE,

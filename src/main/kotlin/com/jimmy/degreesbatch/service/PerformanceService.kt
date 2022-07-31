@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service
 @Service
 @RequiredArgsConstructor
 class PerformanceService {
-
     @Autowired
     lateinit var mapper: PerformanceMapper
 
@@ -27,6 +26,10 @@ class PerformanceService {
     fun insertPerformance(vo: List<PerformanceDetailDto>) {
 
         for (i in vo.indices) {
+            var actors = vo[i].prfcast.split(',')
+            for (name in actors) {
+                mapper.insertActor(vo[i].mt20id, name)
+            }
             mapper.insertPerformance(vo[i])
         }
     }
@@ -34,5 +37,8 @@ class PerformanceService {
     // DELETE
     fun deletePerformance() {
         mapper.deletePerformance()
+    }
+    fun deleteActor() {
+        mapper.deleteActor()
     }
 }

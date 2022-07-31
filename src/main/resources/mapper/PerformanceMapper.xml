@@ -8,29 +8,29 @@
     </select>
 
     <select id="selectDistinctFC" resultType="String">
-        SELECT DISTINCT (FACILITY_ID)
+        SELECT DISTINCT (FACILITYID)
         from performances
     </select>
 
     <insert id="insertPerformance" parameterType="com.jimmy.degreesbatch.Model.PerformanceDetailDto">
-        INSERT INTO performances(PERFORMANCE_ID,
-                                FACILITY_ID,
-                                TITLE,
-                                START_DATE,
-                                END_DATE,
-                                PLACE,
-                                ACTOR,
-                                CREW,
-                                RUNTIME,
-                                RATING,
-                                PRODUCER,
-                                PRICE,
-                                POSTER,
-                                STORY,
-                                GENRE,
-                                STATE,
-                                OPENRUN,
-                                PERFORMANCE_SCHEDULE)
+        INSERT INTO performances(PERFORMANCEID,
+                                 FACILITYID,
+                                 TITLE,
+                                 START_DATE,
+                                 END_DATE,
+                                 PLACE,
+                                 ACTOR,
+                                 CREW,
+                                 RUNTIME,
+                                 RATING,
+                                 PRODUCER,
+                                 PRICE,
+                                 POSTER,
+                                 STORY,
+                                 GENRE,
+                                 STATE,
+                                 OPENRUN,
+                                 PERFORMANCE_SCHEDULE)
         VALUES (#{mt20id},
                 #{mt10id},
                 SUBSTRING_INDEX(#{prfnm}, IF(LOCATE('[', #{prfnm}), '[', '('), 1),
@@ -41,7 +41,7 @@
                 #{prfcrew},
                 #{prfruntime},
                 #{prfage},
-                SUBSTRING_INDEX(#{entrpsnm},IF(LOCATE('[', #{fcltynm}), '[', '('), 1),
+                SUBSTRING_INDEX(#{entrpsnm}, IF(LOCATE('[', #{fcltynm}), '[', '('), 1),
                 #{pcseguidance},
                 #{poster},
                 #{sty},
@@ -51,9 +51,21 @@
                 #{dtguidance})
     </insert>
 
+    <insert id="insertActor" parameterType="String">
+        INSERT INTO actors(PERFORMANCEID,
+                           NAME)
+        VALUES (#{performanceId},
+                REPLACE(REPLACE(#{name}, ' 등', ''), ' ', ''))
+    </insert>
+
     <delete id="deletePerformance">
         DELETE
         FROM performances
+    </delete>
+
+    <delete id="deleteActor">
+        DELETE
+        FROM actors
     </delete>
 
 </mapper>
