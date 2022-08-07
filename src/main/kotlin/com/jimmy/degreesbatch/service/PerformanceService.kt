@@ -24,7 +24,6 @@ class PerformanceService {
 
     // INSERT
     fun insertPerformance(vo: List<PerformanceDetailDto>) {
-
         for (i in vo.indices) {
             var actors = vo[i].prfcast.split(',')
             for (name in actors) {

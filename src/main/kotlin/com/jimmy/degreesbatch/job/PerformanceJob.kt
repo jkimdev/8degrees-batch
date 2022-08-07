@@ -55,6 +55,7 @@ class PerformanceJob(
     private fun getPerformance() {
 
         performanceService.deletePerformance()
+        performanceService.deleteActor()
 
         var performanceAPIUrl =
             "${KOPIS_PERFORMANCE}service=${KOPIS_APIKEY}&stdate=20220705&eddate=202201231&cpage=1&rows=1000"
