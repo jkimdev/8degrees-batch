@@ -11,8 +11,6 @@ interface PerformanceMapper {
     fun findById(): List<PerformanceDto>
     fun selectDistinctFC(): List<String>
     fun insertPerformance(vo: PerformanceDetailDto)
-    fun insertActor(performanceId: String, name: String)
     fun deletePerformance()
-    fun deleteActor()
 
 }

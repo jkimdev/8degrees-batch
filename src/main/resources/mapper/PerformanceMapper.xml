@@ -51,21 +51,9 @@
                 #{dtguidance})
     </insert>
 
-    <insert id="insertActor" parameterType="String">
-        INSERT INTO actors(PERFORMANCEID,
-                           NAME)
-        VALUES (#{performanceId},
-                REPLACE(REPLACE(LTRIM(#{name}), ' 등', ''), ' 외', ''))
-    </insert>
-
     <delete id="deletePerformance">
         DELETE
         FROM performances
-    </delete>
-
-    <delete id="deleteActor">
-        DELETE
-        FROM actors
     </delete>
 
 </mapper>

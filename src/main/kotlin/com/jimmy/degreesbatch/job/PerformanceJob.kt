@@ -7,6 +7,7 @@ import com.jimmy.degreesbatch.response.BoxOfficeResponse
 import com.jimmy.degreesbatch.response.DetailPerformanceResultResponse
 import com.jimmy.degreesbatch.response.FacilityResponse
 import com.jimmy.degreesbatch.response.PerformanceResultResponse
+import com.jimmy.degreesbatch.service.ActorService
 import com.jimmy.degreesbatch.service.BoxOfficeService
 import com.jimmy.degreesbatch.service.FacilityService
 import com.jimmy.degreesbatch.service.PerformanceService
@@ -21,18 +22,21 @@ import java.net.URL
 class PerformanceJob(
     performanceService: PerformanceService,
     facilityService: FacilityService,
-    boxOfficeService: BoxOfficeService
+    boxOfficeService: BoxOfficeService,
+    actorService: ActorService
 ) {
 
 
     private var performanceService: PerformanceService = PerformanceService()
     private var facilityService: FacilityService = FacilityService()
     private var boxOfficeService: BoxOfficeService = BoxOfficeService()
+    private var actorService: ActorService = ActorService()
 
     init {
         this.performanceService = performanceService
         this.facilityService = facilityService
         this.boxOfficeService = boxOfficeService
+        this.actorService = actorService
     }
 
     @Value("\${kopis.apikey}")
@@ -55,7 +59,7 @@ class PerformanceJob(
     private fun getPerformance() {
 
         performanceService.deletePerformance()
-        performanceService.deleteActor()
+        actorService.deleteActor()
 
         var performanceAPIUrl =
             "${KOPIS_PERFORMANCE}service=${KOPIS_APIKEY}&stdate=20220705&eddate=202201231&cpage=1&rows=1000"
@@ -72,7 +76,6 @@ class PerformanceJob(
                 var performanceDetailURL = URL(performanceDetailAPIUrl)
                 var performanceDetailResultResponse =
                     xmlConfigure.readValue(performanceDetailURL, DetailPerformanceResultResponse::class.java)
-
                 performanceDetailResultResponse.db?.let { performanceService.insertPerformance(it) }
             }
         }

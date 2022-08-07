@@ -1,5 +1,6 @@
 package com.jimmy.degreesbatch.service
 
+import com.jimmy.degreesbatch.Mapper.ActorMapper
 import com.jimmy.degreesbatch.Mapper.PerformanceMapper
 import com.jimmy.degreesbatch.Model.PerformanceDetailDto
 import com.jimmy.degreesbatch.Model.PerformanceDto
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service
 class PerformanceService {
     @Autowired
     lateinit var mapper: PerformanceMapper
+    @Autowired
+    lateinit var actorMapper: ActorMapper
 
     // SELECT
     fun selectPerformance(): List<PerformanceDto> {
@@ -27,7 +30,7 @@ class PerformanceService {
         for (i in vo.indices) {
             var actors = vo[i].prfcast.split(',')
             for (name in actors) {
-                mapper.insertActor(vo[i].mt20id, name)
+                actorMapper.insertActor(vo[i].mt20id, name)
             }
             mapper.insertPerformance(vo[i])
         }
@@ -37,7 +40,7 @@ class PerformanceService {
     fun deletePerformance() {
         mapper.deletePerformance()
     }
-    fun deleteActor() {
-        mapper.deleteActor()
-    }
+//    fun deleteActor() {
+//        mapper.deleteActor()
+//    }
 }
