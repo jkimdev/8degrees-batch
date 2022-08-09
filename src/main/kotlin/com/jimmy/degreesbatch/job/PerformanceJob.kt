@@ -7,10 +7,7 @@ import com.jimmy.degreesbatch.response.BoxOfficeResponse
 import com.jimmy.degreesbatch.response.DetailPerformanceResultResponse
 import com.jimmy.degreesbatch.response.FacilityResponse
 import com.jimmy.degreesbatch.response.PerformanceResultResponse
-import com.jimmy.degreesbatch.service.ActorService
-import com.jimmy.degreesbatch.service.BoxOfficeService
-import com.jimmy.degreesbatch.service.FacilityService
-import com.jimmy.degreesbatch.service.PerformanceService
+import com.jimmy.degreesbatch.service.*
 import lombok.extern.slf4j.Slf4j
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.scheduling.annotation.Scheduled
@@ -23,7 +20,11 @@ class PerformanceJob(
     performanceService: PerformanceService,
     facilityService: FacilityService,
     boxOfficeService: BoxOfficeService,
-    actorService: ActorService
+    actorService: ActorService,
+    crewService: CrewService,
+    priceService: PriceService,
+    producerService: ProducerService,
+    scheduleService: ScheduleService,
 ) {
 
 
@@ -31,12 +32,20 @@ class PerformanceJob(
     private var facilityService: FacilityService = FacilityService()
     private var boxOfficeService: BoxOfficeService = BoxOfficeService()
     private var actorService: ActorService = ActorService()
+    private var crewService: CrewService = CrewService()
+    private var priceService: PriceService = PriceService()
+    private var producerService: ProducerService = ProducerService()
+    private var scheduleService: ScheduleService = ScheduleService()
 
     init {
         this.performanceService = performanceService
         this.facilityService = facilityService
         this.boxOfficeService = boxOfficeService
         this.actorService = actorService
+        this.crewService = crewService
+        this.priceService = priceService
+        this.producerService = producerService
+        this.scheduleService = scheduleService
     }
 
     @Value("\${kopis.apikey}")
@@ -60,6 +69,10 @@ class PerformanceJob(
 
         performanceService.deletePerformance()
         actorService.deleteActor()
+        crewService.deleteCrew()
+        priceService.deletePrice()
+        producerService.deleteProducer()
+        scheduleService.deleteProducer()
 
         var performanceAPIUrl =
             "${KOPIS_PERFORMANCE}service=${KOPIS_APIKEY}&stdate=20220705&eddate=202201231&cpage=1&rows=1000"
