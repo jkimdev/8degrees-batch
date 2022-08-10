@@ -5,13 +5,13 @@
 
     <insert id="insertBoxOffice" parameterType="com.jimmy.degreesbatch.Model.BoxOfficeDto">
         INSERT INTO boxoffices (PERFORMANCEID,
-                                  RANKING,
-                                  TITLE,
-                                  GENRE,
-                                  POSTER)
+                                RANKING,
+                                TITLE,
+                                GENRE,
+                                POSTER)
         VALUES (#{mt20id},
                 #{rnum},
-                #{prfnm},
+                SUBSTRING_INDEX(#{prfnm}, IF(LOCATE('[', #{prfnm}), '[', '('), 1),
                 #{cate},
                 #{poster})
     </insert>
