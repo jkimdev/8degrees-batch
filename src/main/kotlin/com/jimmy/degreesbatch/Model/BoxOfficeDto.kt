@@ -8,4 +8,8 @@ class BoxOfficeDto {
     lateinit var prfnm: String
     lateinit var cate: String
     lateinit var poster: String
+    lateinit var prfpd: String
+    lateinit var prfplcnm: String
+    var seatcnt: Int? = 0
+    var area: String? = ""
 }

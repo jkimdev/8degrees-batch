@@ -75,7 +75,7 @@ class PerformanceJob(
         scheduleService.deleteProducer()
 
         var performanceAPIUrl =
-            "${KOPIS_PERFORMANCE}service=${KOPIS_APIKEY}&stdate=20220705&eddate=202201231&cpage=1&rows=1000"
+            "${KOPIS_PERFORMANCE}service=${KOPIS_APIKEY}&stdate=20220716&eddate=202201231&cpage=1&rows=1000"
         var xmlModule = JacksonXmlModule()
         xmlModule.setDefaultUseWrapper(false)
         var xmlConfigure = XmlMapper(xmlModule).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
@@ -92,9 +92,10 @@ class PerformanceJob(
                 performanceDetailResultResponse.db?.let { performanceService.insertPerformance(it) }
             }
         }
+        println("performance done")
     }
 
-    @Scheduled(cron = "*/15 * * * * *")
+    @Scheduled(cron = "*/10 * * * * *")
     private fun getBoxOffice() {
 
         boxOfficeService.deleteBoxOffice()
@@ -112,10 +113,10 @@ class PerformanceJob(
                 boxOfficeResultResponse.boxof!![i].let { boxOfficeService.insertBoxOffice(it) }
             }
         }
-
+        println("boxofiice done")
     }
 
-    @Scheduled(cron = "*/25 * * * * *")
+    @Scheduled(cron = "*/10 * * * * *")
     private fun getFacility() {
 
 //        facilityService.deleteFacility()
@@ -133,5 +134,6 @@ class PerformanceJob(
                 facilityResultResponse.db?.let { facilityService.insertFacility(it) }
             }
         }
+        println("facility done")
     }
 }

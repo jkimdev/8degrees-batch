@@ -8,12 +8,22 @@
                                 RANKING,
                                 TITLE,
                                 GENRE,
-                                POSTER)
+                                POSTER,
+                                PLACE,
+                                AREA,
+                                SEAT,
+                                START_DATE,
+                                END_DATE)
         VALUES (#{mt20id},
                 #{rnum},
                 SUBSTRING_INDEX(#{prfnm}, IF(LOCATE('[', #{prfnm}), '[', '('), 1),
                 #{cate},
-                #{poster})
+                CONCAT('https://kopis.or.kr', #{poster}),
+                #{prfplcnm},
+                #{area},
+                #{seatcnt},
+                SUBSTRING_INDEX(#{prfpd}, '~', 1),
+                SUBSTRING_INDEX(#{prfpd}, '~', -1))
     </insert>
 
     <delete id="deleteBoxOffice">
