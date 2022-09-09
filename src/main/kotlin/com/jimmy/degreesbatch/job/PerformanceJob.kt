@@ -64,7 +64,7 @@ class PerformanceJob(
     lateinit var KOPIS_BOXOFFICE: String
 
 
-    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "*/55 * * * * *")
     private fun getPerformance() {
 
         performanceService.deletePerformance()
@@ -75,7 +75,7 @@ class PerformanceJob(
         scheduleService.deleteProducer()
 
         var performanceAPIUrl =
-            "${KOPIS_PERFORMANCE}service=${KOPIS_APIKEY}&stdate=20220716&eddate=202201231&cpage=1&rows=1000"
+            "${KOPIS_PERFORMANCE}service=${KOPIS_APIKEY}&stdate=20220716&eddate=20221231&cpage=1&rows=1000"
         var xmlModule = JacksonXmlModule()
         xmlModule.setDefaultUseWrapper(false)
         var xmlConfigure = XmlMapper(xmlModule).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
@@ -93,14 +93,16 @@ class PerformanceJob(
             }
         }
         println("performance done")
+        getFacility()
+        getBoxOffice()
     }
 
-    @Scheduled(cron = "*/10 * * * * *")
+//    @Scheduled(cron = "*/55 * * * * *")
     private fun getBoxOffice() {
 
         boxOfficeService.deleteBoxOffice()
 
-        var boxOfficeAPIUrl = "${KOPIS_BOXOFFICE}service=${KOPIS_APIKEY}&ststype=day&date=20220716"
+        var boxOfficeAPIUrl = "${KOPIS_BOXOFFICE}service=${KOPIS_APIKEY}&ststype=day&date=20220908"
 
         var xmlModule = JacksonXmlModule()
         xmlModule.setDefaultUseWrapper(false)
@@ -116,7 +118,7 @@ class PerformanceJob(
         println("boxofiice done")
     }
 
-    @Scheduled(cron = "*/10 * * * * *")
+//    @Scheduled(cron = "*/55 * * * * *")
     private fun getFacility() {
 
 //        facilityService.deleteFacility()

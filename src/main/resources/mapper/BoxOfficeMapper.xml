@@ -22,8 +22,8 @@
                 #{prfplcnm},
                 #{area},
                 #{seatcnt},
-                SUBSTRING_INDEX(#{prfpd}, '~', 1),
-                SUBSTRING_INDEX(#{prfpd}, '~', -1))
+                REPLACE(SUBSTRING_INDEX(#{prfpd}, '~', 1), '.', '-'),
+                REPLACE(SUBSTRING_INDEX(#{prfpd}, '~', -1), '.', '-'))
     </insert>
 
     <delete id="deleteBoxOffice">
