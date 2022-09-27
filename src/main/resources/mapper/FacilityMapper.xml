@@ -14,7 +14,7 @@
                               URL,
                               ADDRESS,
                               LATITUDE,
-                              LONGTITUDE)
+                              LONGITUDE)
         VALUES (#{mt10id},
                 SUBSTRING_INDEX(#{fcltynm}, IF(LOCATE('[', #{fcltynm}), '[', '('), 1),
                 #{mt13cnt},

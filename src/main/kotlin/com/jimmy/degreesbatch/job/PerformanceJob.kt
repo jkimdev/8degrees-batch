@@ -75,7 +75,7 @@ class PerformanceJob(
         scheduleService.deleteProducer()
 
         var performanceAPIUrl =
-            "${KOPIS_PERFORMANCE}service=${KOPIS_APIKEY}&stdate=20220716&eddate=20221231&cpage=1&rows=1000"
+            "${KOPIS_PERFORMANCE}service=${KOPIS_APIKEY}&stdate=20220716&eddate=20221231&cpage=1&rows=10000"
         var xmlModule = JacksonXmlModule()
         xmlModule.setDefaultUseWrapper(false)
         var xmlConfigure = XmlMapper(xmlModule).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
