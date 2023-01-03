@@ -67,7 +67,7 @@ class PerformanceJob(
     lateinit var KOPIS_BOXOFFICE: String
 
 
-    @Scheduled(cron = "0 0 6/23 ? * * *")
+    @Scheduled(cron = "0 0 6/23 * * *")
     private fun getPerformance() {
 
         performanceService.deletePerformance()
