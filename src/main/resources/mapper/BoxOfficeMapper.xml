@@ -5,25 +5,35 @@
 
     <insert id="insertBoxOffice" parameterType="com.jimmy.degreesbatch.Model.BoxOfficeDto">
         INSERT INTO boxoffices (PERFORMANCEID,
-                                RANKING,
-                                TITLE,
-                                GENRE,
-                                POSTER,
-                                PLACE,
-                                AREA,
-                                SEAT,
-                                START_DATE,
-                                END_DATE)
+        RANKING,
+        TITLE,
+        GENRE,
+        POSTER,
+        PLACE,
+        AREA,
+        SEAT,
+        START_DATE,
+        END_DATE)
         VALUES (#{mt20id},
-                #{rnum},
-                SUBSTRING_INDEX(#{prfnm}, IF(LOCATE('[', #{prfnm}), '[', '('), 1),
-                #{cate},
-                CONCAT('https://kopis.or.kr', #{poster}),
-                #{prfplcnm},
-                #{area},
-                #{seatcnt},
-                REPLACE(SUBSTRING_INDEX(#{prfpd}, '~', 1), '.', '-'),
-                REPLACE(SUBSTRING_INDEX(#{prfpd}, '~', -1), '.', '-'))
+        #{rnum},
+        SUBSTRING_INDEX(#{prfnm}, IF(LOCATE('[', #{prfnm}), '[', '('), 1),
+        #{cate},
+        (SELECT CASE
+        WHEN #{cate} = '연극' THEN 'AAAA'
+        WHEN #{cate} = '뮤지컬' THEN 'AAAB'
+        WHEN #{cate} = '무용' THEN 'BBBA'
+        WHEN #{cate} = '클래식' THEN 'CCCA'
+        WHEN #{cate} = '오페라' THEN 'CCCB'
+        WHEN #{cate} = '국악' THEN 'CCCC'
+        WHEN #{cate} = '복합' THEN 'EEEA'
+        ELSE 'XXXX'
+        END)
+        CONCAT('https://kopis.or.kr', #{poster}),
+        #{prfplcnm},
+        #{area},
+        #{seatcnt},
+        REPLACE(SUBSTRING_INDEX(#{prfpd}, '~', 1), '.', '-'),
+        REPLACE(SUBSTRING_INDEX(#{prfpd}, '~', -1), '.', '-'))
     </insert>
 
     <delete id="deleteBoxOffice">
