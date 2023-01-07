@@ -17,7 +17,6 @@
         VALUES (#{mt20id},
         #{rnum},
         SUBSTRING_INDEX(#{prfnm}, IF(LOCATE('[', #{prfnm}), '[', '('), 1),
-        #{cate},
         (SELECT CASE
         WHEN #{cate} = '연극' THEN 'AAAA'
         WHEN #{cate} = '뮤지컬' THEN 'AAAB'
@@ -27,7 +26,7 @@
         WHEN #{cate} = '국악' THEN 'CCCC'
         WHEN #{cate} = '복합' THEN 'EEEA'
         ELSE 'XXXX'
-        END)
+        END),
         CONCAT('https://kopis.or.kr', #{poster}),
         #{prfplcnm},
         #{area},
