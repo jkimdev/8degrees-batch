@@ -49,6 +49,7 @@
                 (SELECT CASE
                             WHEN #{prfstate} = '공연완료' THEN 'DONE'
                             WHEN #{prfstate} = '공연중' THEN 'ONGOING'
+                            ELSE 'UNKNOWN'
                             END),
                 #{openrun})
     </insert>
