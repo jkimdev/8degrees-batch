@@ -3,9 +3,7 @@ package com.jimmy.degreesbatch.job
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule
 import com.fasterxml.jackson.dataformat.xml.XmlMapper
-import com.jimmy.degreesbatch.Utility.after3Months
-import com.jimmy.degreesbatch.Utility.getCurrentTime
-import com.jimmy.degreesbatch.Utility.withoutDash
+import com.jimmy.degreesbatch.Utility.*
 import com.jimmy.degreesbatch.response.BoxOfficeResponse
 import com.jimmy.degreesbatch.response.DetailPerformanceResultResponse
 import com.jimmy.degreesbatch.response.FacilityResponse
@@ -67,7 +65,7 @@ class PerformanceJob(
     lateinit var KOPIS_BOXOFFICE: String
 
 
-    @Scheduled(cron = "0 0 6/23 * * *")
+    @Scheduled(cron = "0 0 6,19 * * *")
     private fun getPerformance() {
 
         performanceService.deletePerformance()
@@ -105,7 +103,7 @@ class PerformanceJob(
 
         boxOfficeService.deleteBoxOffice()
 
-        var boxOfficeAPIUrl = "${KOPIS_BOXOFFICE}service=${KOPIS_APIKEY}&ststype=day&date=20220908"
+        var boxOfficeAPIUrl = "${KOPIS_BOXOFFICE}service=${KOPIS_APIKEY}&ststype=day&date=${getCurrentTime().yesterDay().withoutDash()}"
 
         var xmlModule = JacksonXmlModule()
         xmlModule.setDefaultUseWrapper(false)
