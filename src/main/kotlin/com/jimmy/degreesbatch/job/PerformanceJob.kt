@@ -19,6 +19,7 @@ import java.net.URL
 @Slf4j
 class PerformanceJob(
     performanceService: PerformanceService,
+    detailService: DetailService,
     facilityService: FacilityService,
     boxOfficeService: BoxOfficeService,
     actorService: ActorService,
@@ -30,6 +31,7 @@ class PerformanceJob(
 
 
     private var performanceService: PerformanceService = PerformanceService()
+    private var detailService: DetailService = DetailService()
     private var facilityService: FacilityService = FacilityService()
     private var boxOfficeService: BoxOfficeService = BoxOfficeService()
     private var actorService: ActorService = ActorService()
@@ -40,6 +42,7 @@ class PerformanceJob(
 
     init {
         this.performanceService = performanceService
+        this.detailService = detailService
         this.facilityService = facilityService
         this.boxOfficeService = boxOfficeService
         this.actorService = actorService
@@ -65,11 +68,12 @@ class PerformanceJob(
     lateinit var KOPIS_BOXOFFICE: String
 
 
-    //    @Scheduled(cron = "0 0 6,19 * * *")
-    @Scheduled(cron="0/30 * * * * *")
+//        @Scheduled(cron = "0 0 6,19 * * *")
+    @Scheduled(cron="0/50 * * * * *")
     private fun getPerformance() {
 
         performanceService.deletePerformance()
+        detailService.deleteDetail()
         actorService.deleteActor()
         crewService.deleteCrew()
         priceService.deletePrice()
@@ -77,13 +81,12 @@ class PerformanceJob(
         scheduleService.deleteProducer()
 
         var performanceAPIUrl =
-            "${KOPIS_PERFORMANCE}service=${KOPIS_APIKEY}&stdate=${getCurrentTime().withoutDash()}&eddate=${getCurrentTime().after3Months().withoutDash()}&cpage=1&rows=5"
+            "${KOPIS_PERFORMANCE}service=${KOPIS_APIKEY}&stdate=${getCurrentTime().withoutDash()}&eddate=${getCurrentTime().after3Months().withoutDash()}&cpage=1&rows=10000"
         var xmlModule = JacksonXmlModule()
         xmlModule.setDefaultUseWrapper(false)
         var xmlConfigure = XmlMapper(xmlModule).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
         var performanceURL = URL(performanceAPIUrl)
         var performanceResultResponse = xmlConfigure.readValue(performanceURL, PerformanceResultResponse::class.java)
-
         if (performanceResultResponse != null) {
             for (i in performanceResultResponse.db?.indices!!) {
                 var performanceDetailAPIUrl =
@@ -104,13 +107,12 @@ class PerformanceJob(
 
         boxOfficeService.deleteBoxOffice()
 
-        var boxOfficeAPIUrl = "${KOPIS_BOXOFFICE}service=${KOPIS_APIKEY}&ststype=day&date=${getCurrentTime().yesterDay().withoutDash()}"
-
-        var xmlModule = JacksonXmlModule()
+        val boxOfficeAPIUrl = "${KOPIS_BOXOFFICE}service=${KOPIS_APIKEY}&ststype=day&date=${getCurrentTime().yesterDay().withoutDash()}"
+        val xmlModule = JacksonXmlModule()
         xmlModule.setDefaultUseWrapper(false)
-        var xmlConfigure = XmlMapper(xmlModule).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        var boxOfficeURL = URL(boxOfficeAPIUrl)
-        var boxOfficeResultResponse = xmlConfigure.readValue(boxOfficeURL, BoxOfficeResponse::class.java)
+        val xmlConfigure = XmlMapper(xmlModule).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        val boxOfficeURL = URL(boxOfficeAPIUrl)
+        val boxOfficeResultResponse = xmlConfigure.readValue(boxOfficeURL, BoxOfficeResponse::class.java)
 
         if (boxOfficeResultResponse != null) {
             for (i in boxOfficeResultResponse.boxof?.indices!!) {
@@ -125,15 +127,15 @@ class PerformanceJob(
 
 //        facilityService.deleteFacility()
 
-        var facilities: List<String> = performanceService.selectDistinctFC()
-        var xmlModule = JacksonXmlModule()
+        val facilities: List<String> = performanceService.selectDistinctFC()
+        val xmlModule = JacksonXmlModule()
         xmlModule.setDefaultUseWrapper(false)
-        var xmlConfigure = XmlMapper(xmlModule).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        val xmlConfigure = XmlMapper(xmlModule).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
         for (i in facilities.indices) {
-            var facilityAPIUrl = "${KOPIS_FACILITY}${facilities[i]}?service=${KOPIS_APIKEY}"
-            var url = URL(facilityAPIUrl)
-            var facilityResultResponse = xmlConfigure.readValue(url, FacilityResponse::class.java)
+            val facilityAPIUrl = "${KOPIS_FACILITY}${facilities[i]}?service=${KOPIS_APIKEY}"
+            val url = URL(facilityAPIUrl)
+            val facilityResultResponse = xmlConfigure.readValue(url, FacilityResponse::class.java)
             if (facilityResultResponse != null) {
                 facilityResultResponse.db?.let { facilityService.insertFacility(it) }
             }

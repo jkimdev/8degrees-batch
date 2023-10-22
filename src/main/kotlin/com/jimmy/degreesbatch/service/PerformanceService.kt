@@ -1,6 +1,7 @@
 package com.jimmy.degreesbatch.service
 
 import com.jimmy.degreesbatch.Mapper.*
+import com.jimmy.degreesbatch.Model.DetailDTO
 import com.jimmy.degreesbatch.Model.PerformanceDetailDto
 import com.jimmy.degreesbatch.Model.PerformanceDto
 import lombok.RequiredArgsConstructor
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service
 class PerformanceService {
     @Autowired
     lateinit var mapper: PerformanceMapper
+    @Autowired
+    lateinit var detailMapper: DetailMapper
     @Autowired
     lateinit var actorMapper: ActorMapper
     @Autowired
@@ -40,6 +43,7 @@ class PerformanceService {
             val prices = vo[i].pcseguidance.split(", ")
             val producers = vo[i].entrpsnm.split(',')
             val schedules = vo[i].dtguidance.split(", ")
+            val styurls = vo[i].styurls.map { t -> t.styurl }
 
             for (name in actors) {
                 actorMapper.insertActor(vo[i].mt20id, name)
@@ -55,6 +59,11 @@ class PerformanceService {
             }
             for (schedule in schedules) {
                 scheduleMapper.insertSchedule(vo[i].mt20id, schedule)
+            }
+            for (url in styurls) {
+                if (url.isNotEmpty()) {
+                    detailMapper.insertDetail(vo[i].mt20id, url)
+                }
             }
 
             mapper.insertPerformance(vo[i])

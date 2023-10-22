@@ -18,6 +18,6 @@ class PerformanceDetailDto {
     val genrenm: String = ""
     val prfstate: String = ""
     val openrun: String = ""
-//    val styurls: String
+    val styurls: List<DetailDTO> = emptyList()
     val mt10id: String = ""
 }
